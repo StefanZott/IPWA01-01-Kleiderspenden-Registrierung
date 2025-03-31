@@ -17,7 +17,7 @@ function App() {
     <main  className='d-flex flex-column flex-grow-1'>
       
     </main>
-    <footer  className='d-flex flex-fill bg-warning'>
+    <footer  className='d-flex bg-warning'>
       <Footer/>
     </footer>
     </>
