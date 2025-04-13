@@ -3,17 +3,27 @@ import "leaflet/dist/leaflet.css";
 import WorldMap from "../components/WorldMap";
 
 function Home() {
-    const [checkBoxOffice, setCheckBoxOffice] = useState<1 | 2 | null>(null);
-    const [checkBoxVehicle, setCheckBoxVehicle] = useState<1 | 2 | null>(null);
+    const [checkBoxOffice, setCheckBoxOffice] = useState<1 | null>(null);
+    const [checkBoxVehicle, setCheckBoxVehicle] = useState<2 | null>(null);
 
-    const handleCheckboxChange = (boxNumber: 1 | 2) => {
+    const handleCheckboxChange = (boxNumber: 1 | 2 | null) => {
         console.log("boxNumber: " + boxNumber)
         if (boxNumber === 1) {
-            setCheckBoxOffice(1)
-            setCheckBoxVehicle(null)
+            if (checkBoxOffice === 1) {
+                setCheckBoxOffice(null)
+                setCheckBoxVehicle(null)
+            } else if (checkBoxOffice === null) {
+                setCheckBoxOffice(1)
+                setCheckBoxVehicle(null)
+            }
         } else if (boxNumber === 2) {
-            setCheckBoxVehicle(2)
-            setCheckBoxOffice(null)
+            if (checkBoxVehicle === 2) {
+                setCheckBoxOffice(null)
+                setCheckBoxVehicle(null)
+            } else if (checkBoxVehicle === null) {
+                setCheckBoxOffice(null)
+                setCheckBoxVehicle(2)
+            }
         }
         
     }
