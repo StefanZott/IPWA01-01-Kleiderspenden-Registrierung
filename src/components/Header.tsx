@@ -9,7 +9,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 function Header() {
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary w-100">
+      <Navbar expand="lg" className="bg-body-tertiary sticky-top w-100">
         <Container fluid>
           <Navbar.Brand href="#">Hoffnungsfaden GmbH</Navbar.Brand>
           <Navbar.Toggle aria-controls="navbarScroll" />

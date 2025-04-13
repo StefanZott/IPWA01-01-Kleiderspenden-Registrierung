@@ -1,26 +1,26 @@
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 
 // Components
-import Header from './components/Header';
-import Footer from './components/Footer';
-import Content from './components/Content';
+import Home from './pages/Home';
+import Impressum from './pages/Impressum';
+import Privacy from './pages/Privacy';
+import Layout from './components/Layout';
 
 function App() {
-
   return (
-    <>
-    <header className='d-flex w-100'>
-      <Header/>
-    </header>
-    <main  className='d-flex flex-column flex-grow-1 align-items-center overflow-auto'>
-      <Content/>
-    </main>
-    <footer  className='d-flex bg-body-tertiary'>
-      <Footer/>
-    </footer>
-    </>
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="privacy" element={<Privacy />} />
+          <Route path="impressum" element={<Impressum />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App

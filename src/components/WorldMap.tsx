@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
+import type { FeatureCollection, GeoJsonObject, Feature } from "geojson";
 import "leaflet/dist/leaflet.css";
 
 const geoJsonUrl =
   "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
 
 const WorldMap = () => {
-  const [geoData, setGeoData] = useState(null);
+  const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
 
   useEffect(() => {
@@ -27,17 +28,22 @@ const WorldMap = () => {
     return null;
   };
 
-  const onCountryClick = (event: any) => {
-    const name = event.target.feature.properties.NAME_EN;
-    const isoCode = event.target.feature.properties.ISO_A3;
+  const onCountryClick = (event: L.LeafletMouseEvent) => {
+    const feature = event.target.feature;
+    const name = feature.properties.name;
+    const isoCode = feature.properties["ISO3166-1-Alpha-2"]
   
-    console.log("Geklickt:", name);
-    setSelectedCountry(isoCode);
+    // console.log("Geklickt:", name);
+    setSelectedCountry((prev) => (prev === isoCode ? null : isoCode));
   };
 
   const countryStyle = (feature: any) => {
-    const isoCode = feature.properties.ISO_A3;
+    // console.log("countryStyle: ", feature.properties);
+    const isoCode = feature.properties["ISO3166-1-Alpha-2"];
     const isSelected = isoCode === selectedCountry;
+    // console.log("isoCode: ", isoCode);
+    // console.log("selectedCountry: ", selectedCountry);
+    // console.log("isSelected: ", isSelected);
   
     return {
       fillColor: isSelected ? "#ff6961" : "#bcd", // Highlight rot
@@ -60,17 +66,19 @@ const WorldMap = () => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {geoData && (
-          <GeoJSON
-            data={geoData}
-            style={countryStyle}
-            onEachFeature={(feature, layer) => {
-              layer.on({
-                click: onCountryClick,
-              });
-            }}
-          />
-        )}
+        {geoData &&
+          geoData.features.map((feature: any, index: number) => (
+            <GeoJSON
+              key={index}
+              data={feature}
+              style={() => countryStyle(feature)}
+              onEachFeature={(_, layer) => {
+                layer.on({
+                  click: (event) => onCountryClick(event),
+                });
+              }}
+            />
+        ))}
       </MapContainer>
     </div>
   );
