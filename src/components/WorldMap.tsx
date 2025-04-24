@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import type { FeatureCollection, GeoJsonObject, Feature } from "geojson";
 import "leaflet/dist/leaflet.css";
+import { useHandover } from "../context/FormContext";
 
 const geoJsonUrl =
   "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
@@ -9,6 +10,7 @@ const geoJsonUrl =
 const WorldMap = () => {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const { data, updateData } = useHandover();
 
   useEffect(() => {
     fetch(geoJsonUrl)
@@ -35,6 +37,7 @@ const WorldMap = () => {
   
     // console.log("Geklickt:", name);
     setSelectedCountry((prev) => (prev === isoCode ? null : isoCode));
+    updateData({"crisisArea": name})
   };
 
   const countryStyle = (feature: any) => {
