@@ -1,4 +1,3 @@
-import React from "react";
 import { useHandover } from "../context/FormContext";
 
 function RegistrationScreen() {

@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 function Home() {
     const [checkBoxOffice, setCheckBoxOffice] = useState<1 | null>(null);
     const [checkBoxVehicle, setCheckBoxVehicle] = useState<2 | null>(null);
-    const [mainZip, setMainZip] = useState<string>("74592")
-    const { data, updateData } = useHandover();
+    const [mainZip] = useState<string>("74592")
+    const { updateData } = useHandover();
     const navigate = useNavigate();
 
     const handleCheckboxChange = (boxNumber: 1 | 2 | null, id: string) => {
@@ -74,7 +74,7 @@ function Home() {
             console.log(element.id)
             console.log(element.value)
             console.log("")
-            if (element.value !== 0) {
+            if (element.value !== "") {
                 updateData({[element.id]: element.value})
             }
         }
@@ -94,7 +94,11 @@ return (
         <div id="handoverAtTheOffice" className="form-check" hidden={checkBoxOffice === null}>
             <div className="col-12">
                 <label htmlFor="artOfCloth" className="form-label">Art der Kleidung</label>
-                <input type="text" className="form-control" id="artOfCloth" onChange={(event) => checkZip(event.target.value)} />
+                <input type="text" className="form-control" id="artOfCloth" onChange={(event) => changeHandler(event)}/>
+            </div>
+            <div className="col-12">
+                <label htmlFor="crisisArea" className="form-label">Krisengebiet</label>
+                <WorldMap />
             </div>
         </div>
         <div className="form-check p-0">

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
-import type { FeatureCollection, GeoJsonObject, Feature } from "geojson";
+import type { FeatureCollection } from "geojson";
 import "leaflet/dist/leaflet.css";
 import { useHandover } from "../context/FormContext";
 
@@ -10,7 +10,7 @@ const geoJsonUrl =
 const WorldMap = () => {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const { data, updateData } = useHandover();
+  const { updateData } = useHandover();
 
   useEffect(() => {
     fetch(geoJsonUrl)
