@@ -13,7 +13,6 @@ function Footer() {
       </nav> */}
       <Navbar expand="lg" className="bg-body-tertiary sticky-bottom w-100">
         <Container className="d-flex justify-content-around w-50" fluid>
-          <Nav.Link href="/">Home</Nav.Link>
           <Nav.Link href="/impressum">Impressum</Nav.Link>
           <Nav.Link href="/privacy">Datenschutz</Nav.Link>
         </Container>
