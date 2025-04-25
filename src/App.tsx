@@ -9,6 +9,7 @@ import Impressum from './pages/Impressum';
 import Privacy from './pages/Privacy';
 import Layout from './components/Layout';
 import RegistrationScreen from './pages/RegistrationScreen';
+import FormScreen from './pages/FormScreen';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path="form" element={<FormScreen />} />
             <Route path="privacy" element={<Privacy />} />
             <Route path="impressum" element={<Impressum />} />
             <Route path="registration" element={<RegistrationScreen />} />
