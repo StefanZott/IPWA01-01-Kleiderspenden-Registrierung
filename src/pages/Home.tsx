@@ -79,6 +79,14 @@ function Home() {
             }
         }
 
+        // 🕒 Aktuelles Datum und Uhrzeit setzen
+        const now = new Date();
+        const date = now.toLocaleDateString("de-DE");   // z.B. 23.04.2025
+        const time = now.toLocaleTimeString("de-DE");   // z.B. 14:52:11
+
+        updateData({"date": date})
+        updateData({"time": time})
+
         navigate("/registration")
     }
 

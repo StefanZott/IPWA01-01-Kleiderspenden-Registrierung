@@ -16,6 +16,8 @@ function RegistrationScreen() {
                 <li className="list-group-item"><strong>PLZ:</strong> {data.zip}</li>
                 <li className="list-group-item"><strong>Kleidung:</strong> {data.artOfCloth}</li>
                 <li className="list-group-item"><strong>Krisengebiet:</strong> {data.crisisArea}</li>
+                <li className="list-group-item"><strong>Datum:</strong> {data.date}</li>
+                <li className="list-group-item"><strong>Uhrzeit:</strong> {data.time}</li>
             </ul>
         </div>
     );

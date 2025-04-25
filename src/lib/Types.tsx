@@ -8,5 +8,7 @@ export interface HandoverAtTheOffice {
     zip: string
     artOfCloth: string
     crisisArea: string
+    date: string
+    time: string
     setFormContent: (c: string) => void
 }
