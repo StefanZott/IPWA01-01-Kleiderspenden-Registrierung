@@ -20,7 +20,7 @@ function Header() {
               <Nav.Link href="/">Home</Nav.Link>
               <NavDropdown title="Kleiderspende" id="navbarScrollingDropdown">
                 <NavDropdown.Item href="/form">Kleiderspende registrieren</NavDropdown.Item>
-                <NavDropdown.Item href="#action4">
+                <NavDropdown.Item href="/clothDonations">
                   Getätigte Kleiderspenden
                 </NavDropdown.Item>
               </NavDropdown>

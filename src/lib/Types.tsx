@@ -1,4 +1,4 @@
-export interface HandoverAtTheOffice {
+export interface ClothDonation {
     action: string
     firstname: string
     lastname: string
@@ -12,3 +12,5 @@ export interface HandoverAtTheOffice {
     time: string
     setFormContent: (c: string) => void
 }
+
+export type SortDirection = "asc" | "desc";

@@ -1,0 +1,17 @@
+.custom-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #343a40; /* Dunkles Grau (Bootstrap dark) */
+    color: white;
+    z-index: 10;
+}
+
+.custom-table tbody tr:hover {
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+}
+
+.custom-table th, .custom-table td {
+    vertical-align: middle;
+    text-align: center;
+}

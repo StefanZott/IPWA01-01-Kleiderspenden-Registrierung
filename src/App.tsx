@@ -10,6 +10,7 @@ import Privacy from './pages/Privacy';
 import Layout from './components/Layout';
 import RegistrationScreen from './pages/RegistrationScreen';
 import FormScreen from './pages/FormScreen';
+import ClothDonationScreen from './pages/ClothDonationScreen';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route path="privacy" element={<Privacy />} />
             <Route path="impressum" element={<Impressum />} />
             <Route path="registration" element={<RegistrationScreen />} />
+            <Route path="clothDonations" element={<ClothDonationScreen />} />
           </Route>
         </Routes>
       </BrowserRouter>
