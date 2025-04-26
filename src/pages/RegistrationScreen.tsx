@@ -1,15 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { useHandover } from "../context/FormContext";
 import { ClothDonation } from "../lib/Types";
+import { useNavigate } from "react-router-dom";
 
 function RegistrationScreen() {
   const hasRun = useRef(false);
   const { data, updateData } = useHandover();
   const [currentDonation, setCurrentDonation] = useState<ClothDonation>()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (hasRun.current) return;
     hasRun.current = true;
+
+    // Prüfen, ob das "data" Objekt leer ist (nach einem Reload)
+    if (!data.artOfCloth && !data.crisisArea && !data.date && !data.time) {
+        navigate("/"); // Sofort weiterleiten auf Home
+        return;
+    }
 
     let id = localStorage.length + 1;
     const jsonData = JSON.stringify(data);
