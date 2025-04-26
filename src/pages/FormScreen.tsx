@@ -43,8 +43,8 @@ function FormScreen() {
         const prefix1 = mainZip.slice(0, 2);
         const prefix2 = zip.slice(0, 2);
 
-        console.log(prefix1)
-        console.log(prefix2)
+        // console.log(prefix1)
+        // console.log(prefix2)
         if (prefix1 !== prefix2) {
             document.getElementById("zip")?.classList.remove("border-success")
             document.getElementById("zip")?.classList.add("border-danger")
@@ -56,7 +56,7 @@ function FormScreen() {
 
     const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
         console.log(event.target.type)
-        if (event.target.value.length > 3) {
+        if (event.target.value.length >= 3) {
             document.getElementById(event.target.id)?.classList.remove("border-danger")
             document.getElementById(event.target.id)?.classList.add("border-success")
         } else {
