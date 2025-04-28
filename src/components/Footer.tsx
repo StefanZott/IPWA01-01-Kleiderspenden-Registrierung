@@ -6,19 +6,17 @@ import Navbar from 'react-bootstrap/Navbar';
 function Footer() {
   return (
     <>
-      {/* <nav className="navbar sticky-bottom bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">Sticky bottom</a>
-        </div>
-      </nav> */}
-      <Navbar expand="lg" className="bg-body-tertiary sticky-bottom w-100">
-        <Container className="d-flex justify-content-around w-50" fluid>
-          <Nav.Link href="/impressum">Impressum</Nav.Link>
-          <Nav.Link href="/privacy">Datenschutz</Nav.Link>
+      <Navbar expand="lg" className="sticky-bottom w-100" style={{ backgroundColor: '#FF6F00' }}>
+        <Container className="d-flex justify-content-center py-2">
+          <Nav className="d-flex gap-4">
+            <Nav.Link href="/impressum" style={{ color: 'white', fontWeight: '500' }}>Impressum</Nav.Link>
+            <Nav.Link href="/privacy" style={{ color: 'white', fontWeight: '500' }}>Datenschutz</Nav.Link>
+            <Nav.Link href="/agb" style={{ color: 'white', fontWeight: '500' }}>AGB</Nav.Link>
+          </Nav>
         </Container>
       </Navbar>
     </>
   )
 }
 
-export default Footer
+export default Footer;

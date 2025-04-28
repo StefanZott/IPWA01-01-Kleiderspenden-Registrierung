@@ -11,6 +11,7 @@ import Layout from './components/Layout';
 import RegistrationScreen from './pages/RegistrationScreen';
 import FormScreen from './pages/FormScreen';
 import ClothDonationScreen from './pages/ClothDonationScreen';
+import AGB from './pages/AGB';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="impressum" element={<Impressum />} />
             <Route path="registration" element={<RegistrationScreen />} />
             <Route path="clothDonations" element={<ClothDonationScreen />} />
+            <Route path="agb" element={<AGB />} />
           </Route>
         </Routes>
       </BrowserRouter>

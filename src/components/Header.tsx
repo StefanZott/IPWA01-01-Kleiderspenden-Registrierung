@@ -7,19 +7,26 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 function Header() {
   return (
     <>
-      <Navbar expand="lg" className="bg-body-tertiary sticky-top w-100">
+      <Navbar expand="lg" className="sticky-top w-100" style={{ backgroundColor: '#FF6F00' }}>
         <Container fluid>
-          <Navbar.Brand href="/">Hoffnungsfaden GmbH</Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbarScroll" />
+          <Navbar.Brand href="/" style={{ color: 'white', fontWeight: 'bold', fontSize: '1.5rem' }}>
+            Hoffnungsfaden GmbH
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="navbarScroll" style={{ backgroundColor: 'white' }} />
           <Navbar.Collapse id="navbarScroll">
             <Nav
               className="me-auto my-2 my-lg-0"
-              style={{ maxHeight: '100px' }}
               navbarScroll
             >
-              <Nav.Link href="/">Home</Nav.Link>
-              <NavDropdown title="Kleiderspende" id="navbarScrollingDropdown">
-                <NavDropdown.Item href="/form">Kleiderspende registrieren</NavDropdown.Item>
+              <Nav.Link href="/" style={{ color: 'white' }}>Home</Nav.Link>
+              <NavDropdown 
+                title={<span style={{ color: 'white' }}>Kleiderspende</span>} 
+                id="navbarScrollingDropdown"
+                menuVariant="light"
+              >
+                <NavDropdown.Item href="/form">
+                  Kleiderspende registrieren
+                </NavDropdown.Item>
                 <NavDropdown.Item href="/clothDonations">
                   Getätigte Kleiderspenden
                 </NavDropdown.Item>
@@ -32,4 +39,4 @@ function Header() {
   )
 }
 
-export default Header
+export default Header;
