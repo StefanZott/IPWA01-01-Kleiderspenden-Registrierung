@@ -22,9 +22,7 @@ function ClothDonationScreen() {
                     try {
                         const parsed = JSON.parse(item);
                         // Sicherstellen, dass es die richtigen Felder hat
-                        if (parsed.firstname && parsed.lastname) {
-                            allClothDonations.push({ key, data: parsed });
-                        }
+                        allClothDonations.push({ key, data: parsed });
                     } catch (error) {
                         console.error("Fehler beim Parsen von localStorage Item:", key, error);
                     }
