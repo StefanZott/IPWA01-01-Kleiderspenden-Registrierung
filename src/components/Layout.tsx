@@ -8,7 +8,7 @@ const Layout = () => {
     <div className=" d-flex flex-column h-100 w-100">
       <Header />
 
-      <main className="d-flex flex-fill justify-content-center align-items-start overflow-auto p-3 w-100">
+      <main className="d-flex flex-fill justify-content-center align-items-start overflow-auto w-100">
         <Outlet /> {/* Hier wird der jeweilige Seiten-Content gerendert */}
       </main>
 
