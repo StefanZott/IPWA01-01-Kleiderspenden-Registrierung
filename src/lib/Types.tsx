@@ -1,4 +1,4 @@
-export interface ClothDonation {
+export interface ClothDonationType {
     action: string
     firstname: string
     lastname: string

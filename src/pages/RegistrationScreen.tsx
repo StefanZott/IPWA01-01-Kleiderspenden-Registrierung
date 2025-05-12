@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
-import { useHandover } from "../context/FormContext";
-import { ClothDonation } from "../lib/Types";
+import { useHandover } from "../components/context/ClothDonation";
+import { ClothDonationType } from "../lib/Types";
 import { useNavigate } from "react-router-dom";
 
 function RegistrationScreen() {
   const hasRun = useRef(false);
   const { data, updateData } = useHandover();
-  const [currentDonation, setCurrentDonation] = useState<ClothDonation>()
+  const [currentDonation, setCurrentDonation] = useState<ClothDonationType>()
   const navigate = useNavigate();
 
   useEffect(() => {

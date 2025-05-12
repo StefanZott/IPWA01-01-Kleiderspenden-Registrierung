@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { ClothDonation } from '../lib/Types';
+import { ClothDonationType } from '../../lib/Types';
 
-const defaultData: Omit<ClothDonation, 'setFormContent'> = {
+const defaultData: Omit<ClothDonationType, 'setFormContent'> = {
   action: '',
   firstname: '',
   lastname: '',
@@ -14,8 +14,8 @@ const defaultData: Omit<ClothDonation, 'setFormContent'> = {
 };
 
 interface HandoverContextType {
-  data: ClothDonation;
-  updateData: (d: Partial<Omit<ClothDonation, 'setFormContent'>>) => void;
+  data: ClothDonationType;
+  updateData: (d: Partial<Omit<ClothDonationType, 'setFormContent'>>) => void;
 }
 
 const HandoverContext = createContext<HandoverContextType | undefined>(undefined);
@@ -27,12 +27,12 @@ export const HandoverProvider = ({ children }: { children: ReactNode }) => {
     setDataState(prev => ({ ...prev, action: key })); // Beispiel: setFormContent ändert "action"
   };
 
-  const data: ClothDonation = {
+  const data: ClothDonationType = {
     ...dataState,
     setFormContent,
   };
 
-  const updateData = (newData: Partial<Omit<ClothDonation, 'setFormContent'>>) => {
+  const updateData = (newData: Partial<Omit<ClothDonationType, 'setFormContent'>>) => {
     setDataState(prev => ({ ...prev, ...newData }));
   };
 

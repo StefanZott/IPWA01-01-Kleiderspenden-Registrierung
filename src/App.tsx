@@ -1,17 +1,17 @@
 import './App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HandoverProvider } from './context/FormContext';
+import { HandoverProvider } from './components/context/ClothDonation';
 
 // Components
-import Home from './pages/Home';
-import Impressum from './pages/Impressum';
-import Privacy from './pages/Privacy';
-import Layout from './components/Layout';
+import Home from './pages/HomeScreen';
+import Impressum from './pages/ImpressumScreen';
+import Privacy from './pages/PrivacyScreen';
+import Layout from './components/ui/Layout';
 import RegistrationScreen from './pages/RegistrationScreen';
 import FormScreen from './pages/FormScreen';
 import ClothDonationScreen from './pages/ClothDonationScreen';
-import AGB from './pages/AGB';
+import AGB from './pages/AgbScreen';
 
 function App() {
   return (

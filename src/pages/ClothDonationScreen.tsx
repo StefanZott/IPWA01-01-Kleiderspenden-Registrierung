@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
-import { ClothDonation } from "../lib/Types";
+import { ClothDonationType } from "../lib/Types";
 import '../css/ClothDonationScreen.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 function ClothDonationScreen() {
-    const [clothDonations, setClothDonations] = useState<{ key: string, data: ClothDonation }[]>([]);
+    const [clothDonations, setClothDonations] = useState<{ key: string, data: ClothDonationType }[]>([]);
     const [searchTerm, setSearchTerm] = useState("");
-    const [sortField, setSortField] = useState<keyof ClothDonation>("firstname");
+    const [sortField, setSortField] = useState<keyof ClothDonationType>("firstname");
     const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc");
     const [editKey, setEditKey] = useState<string | null>(null);
-    const [editedData, setEditedData] = useState<Partial<ClothDonation>>({});
+    const [editedData, setEditedData] = useState<Partial<ClothDonationType>>({});
 
     useEffect(() => {
-        const allClothDonations: { key: string, data: ClothDonation }[] = [];
+        const allClothDonations: { key: string, data: ClothDonationType }[] = [];
 
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
@@ -37,7 +37,7 @@ function ClothDonationScreen() {
 
     const handleResetSearch = () => setSearchTerm("");
 
-    const handleSort = (field: keyof ClothDonation) => {
+    const handleSort = (field: keyof ClothDonationType) => {
         setSortField(field);
         setSortDirection(prev => (field === sortField && prev === "asc") ? "desc" : "asc");
     };
@@ -49,19 +49,19 @@ function ClothDonationScreen() {
         }
     };
 
-    const handleEdit = (key: string, data: ClothDonation) => {
+    const handleEdit = (key: string, data: ClothDonationType) => {
         setEditKey(key);
         setEditedData(data);
     };
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof ClothDonation) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof ClothDonationType) => {
         setEditedData(prev => ({ ...prev, [field]: e.target.value }));
     };
 
     const handleSave = (key: string) => {
         if (!editedData) return;
         localStorage.setItem(key, JSON.stringify(editedData));
-        setClothDonations(prev => prev.map(d => d.key === key ? { key, data: editedData as ClothDonation } : d));
+        setClothDonations(prev => prev.map(d => d.key === key ? { key, data: editedData as ClothDonationType } : d));
         setEditKey(null);
         setEditedData({});
     };
@@ -71,7 +71,7 @@ function ClothDonationScreen() {
         setEditedData({});
     };
 
-    const renderSortArrow = (field: keyof ClothDonation) => {
+    const renderSortArrow = (field: keyof ClothDonationType) => {
         if (sortField !== field) return null;
         return (
             <i className={`bi bi-caret-${sortDirection === "asc" ? "up" : "down"}-fill ms-1`} style={{ fontSize: "0.8rem" }}></i>
@@ -141,7 +141,7 @@ function ClothDonationScreen() {
                                                     type="text"
                                                     className="form-control"
                                                     value={(editedData as any)[field] || ""}
-                                                    onChange={(e) => handleChange(e, field as keyof ClothDonation)}
+                                                    onChange={(e) => handleChange(e, field as keyof ClothDonationType)}
                                                 />
                                             </td>
                                         ))}
