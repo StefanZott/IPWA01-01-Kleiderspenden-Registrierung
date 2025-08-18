@@ -1,4 +1,4 @@
-import './App.css'
+import './css/App.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HandoverProvider } from './components/context/ClothDonation';

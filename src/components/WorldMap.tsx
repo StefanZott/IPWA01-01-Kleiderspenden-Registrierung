@@ -1,60 +1,95 @@
-import { useEffect, useState } from "react";
+// src/components/WorldMap.tsx
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
-import type { FeatureCollection } from "geojson";
+import type { FeatureCollection, Feature } from "geojson";
+import type { LeafletMouseEvent, PathOptions } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useHandover } from "./context/ClothDonation";
 
-const geoJsonUrl =
+const GEOJSON_URL =
   "https://raw.githubusercontent.com/datasets/geo-countries/master/data/countries.geojson";
+
+// erlaubt: Buchstaben (inkl. Akzente), Leerzeichen, Punkt, Apostroph, Bindestrich
+const ALLOWED_NAME = /^[\p{L}\p{M}\s.'-]{1,100}$/u;
+
+function normalizeName(input: unknown): string | null {
+  if (typeof input !== "string") return null;
+  const t = input.trim();
+  return ALLOWED_NAME.test(t) ? t : null;
+}
 
 const WorldMap = () => {
   const [geoData, setGeoData] = useState<FeatureCollection | null>(null);
-  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const [selectedIso, setSelectedIso] = useState<string | null>(null);
   const { updateData } = useHandover();
 
   useEffect(() => {
-    fetch(geoJsonUrl)
-      .then((res) => res.json())
-      .then((data) => setGeoData(data));
+    const ac = new AbortController();
+
+    (async () => {
+      try {
+        const res = await fetch(GEOJSON_URL, { signal: ac.signal });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = (await res.json()) as FeatureCollection;
+        setGeoData(data);
+      } catch (err: any) {
+        if (err?.name !== "AbortError") {
+          console.error("GeoJSON laden fehlgeschlagen:", err);
+        }
+      }
+    })();
+
+    return () => ac.abort();
   }, []);
 
   const ResizeFix = () => {
     const map = useMap();
-  
     useEffect(() => {
-      setTimeout(() => {
-        map.invalidateSize();
-      }, 100); // Verzögerung wichtig
+      const id = setTimeout(() => map.invalidateSize(), 120);
+      return () => clearTimeout(id);
     }, [map]);
-  
     return null;
   };
 
-  const onCountryClick = (event: L.LeafletMouseEvent) => {
-    const feature = event.target.feature;
-    const name = feature.properties.name;
-    const isoCode = feature.properties["ISO3166-1-Alpha-2"]
-  
-    // console.log("Geklickt:", name);
-    setSelectedCountry((prev) => (prev === isoCode ? null : isoCode));
-    updateData({"crisisArea": name})
-  };
+  const countryStyle = useCallback(
+    (feature?: Feature): PathOptions => {
+      const iso = feature?.properties && (feature.properties as any)["ISO3166-1-Alpha-2"];
+      const isSelected = !!iso && iso === selectedIso;
+      return {
+        fillColor: isSelected ? "#ff6961" : "#bcd",
+        weight: isSelected ? 2 : 1,
+        color: isSelected ? "#ff0000" : "#333",
+        fillOpacity: isSelected ? 0.8 : 0.6,
+      };
+    },
+    [selectedIso]
+  );
 
-  const countryStyle = (feature: any) => {
-    // console.log("countryStyle: ", feature.properties);
-    const isoCode = feature.properties["ISO3166-1-Alpha-2"];
-    const isSelected = isoCode === selectedCountry;
-    // console.log("isoCode: ", isoCode);
-    // console.log("selectedCountry: ", selectedCountry);
-    // console.log("isSelected: ", isSelected);
-  
-    return {
-      fillColor: isSelected ? "#ff6961" : "#bcd", // Highlight rot
-      weight: isSelected ? 2 : 1,
-      color: isSelected ? "#ff0000" : "#333",
-      fillOpacity: isSelected ? 0.8 : 0.6,
-    };
-  };
+  const onEachFeature = useCallback(
+    (_feature: Feature, layer: L.Layer) => {
+      layer.on("click", (evt: LeafletMouseEvent) => {
+        const feature = (evt.target as any).feature as Feature | undefined;
+        const props = feature?.properties as any;
+        const iso = props?.["ISO3166-1-Alpha-2"];
+        const rawName = props?.name;
+
+        const safeName = normalizeName(rawName);
+        if (!iso || !safeName) return;
+
+        setSelectedIso((prev) => (prev === iso ? null : iso));
+        updateData({ crisisArea: safeName });
+      });
+      // Optional: Mauszeiger als Hinweis
+      // @ts-ignore
+      layer.setStyle?.({ className: "cursor-pointer" });
+    },
+    [updateData]
+  );
+
+  const geoLayer = useMemo(() => {
+    if (!geoData) return null;
+    return <GeoJSON data={geoData} style={countryStyle} onEachFeature={onEachFeature} />;
+  }, [geoData, countryStyle, onEachFeature]);
 
   return (
     <div style={{ width: "100%", height: "600px" }}>
@@ -62,26 +97,14 @@ const WorldMap = () => {
         style={{ height: "100%", width: "100%" }}
         center={[20, 0]}
         zoom={2}
-        scrollWheelZoom={true}
+        scrollWheelZoom
       >
         <ResizeFix />
         <TileLayer
-          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a>'
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {geoData &&
-          geoData.features.map((feature: any, index: number) => (
-            <GeoJSON
-              key={index}
-              data={feature}
-              style={() => countryStyle(feature)}
-              onEachFeature={(_, layer) => {
-                layer.on({
-                  click: (event) => onCountryClick(event),
-                });
-              }}
-            />
-        ))}
+        {geoLayer}
       </MapContainer>
     </div>
   );
